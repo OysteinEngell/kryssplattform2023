@@ -5,10 +5,12 @@ import {
   Roboto_700Bold,
   useFonts,
 } from "@expo-google-fonts/roboto";
-import Button from "./src/components/Button";
 import { View } from "react-native";
 
+
+
 export default function App() {
+
   const [fontsLoaded] = useFonts({
     Roboto_700Bold,
     Roboto_400Regular,
@@ -23,8 +25,9 @@ export default function App() {
   }
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button title="Join the journey" Icon={() => <></>} onPress={log}/>
+    <View style={{flex: 1}}>
+      <WelcomeRoutes />
     </View>
+  
   );
 }
