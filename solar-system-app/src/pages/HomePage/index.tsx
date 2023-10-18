@@ -10,13 +10,13 @@ import { usePlanetContext } from "../../providers/PlanetContextProvider";
 const HomePage: React.FC = () => {
   const { currentPlanet, setCurrentPlanet } = usePlanetContext();
 
-  const handlePlanetChange = (planetName: string) => {
-    setCurrentPlanet({
-      planetName,
-      PlanetImage: Assets.images.Earth,
-      planetInfo: planetName,
-    });
-  };
+  // const handlePlanetChange = (planetName: string) => {
+  //   setCurrentPlanet({
+  //     planetName,
+  //     PlanetImage: Assets.images.Earth,
+  //     planetInfo: planetName,
+  //   });
+  // };
 
   return (
     <View style={styles.container}>
@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
             <PlanetCard
               label="Venus"
               PlanetImage={Assets.images.Venus}
-              onPress={handlePlanetChange}
+              
             />
             <PlanetCard label="Earth" PlanetImage={Assets.images.Earth} />
             <PlanetCard label="Mars" PlanetImage={Assets.images.Mars} />
