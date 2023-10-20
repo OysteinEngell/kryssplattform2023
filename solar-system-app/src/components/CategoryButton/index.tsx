@@ -19,7 +19,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
     <TouchableOpacity>
       <Gradient style={styles.container}>
         <Icon style={styles.icon} />
-        <Text style={styles.label}>{label}</Text>
+        <Text style={styles.label} className="mt-2">{label}</Text>
       </Gradient>
     </TouchableOpacity>
   );
