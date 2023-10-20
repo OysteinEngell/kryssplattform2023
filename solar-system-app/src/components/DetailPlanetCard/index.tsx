@@ -15,20 +15,20 @@ const DetailPlanetCard: React.FC<DetailPlanetCardProps> = ({
   planetInfo,
 }) => {
   return (
-    <View className="flex-row my-2 overflow-hidden rounded-md w-9/10 bg-system-brandbg">
+    <View className="flex-row my-2 overflow-hidden rounded-md w-9/10 bg-brandbg">
       <PlanetImage width={200} height={200} className="top-[-40] left-[-35]" />
       <View className="justify-center left-[-30] w-[45%] ml-1 mr-25">
         <View className="flex-row justify-between items-center">
-          <Text style={Fonts.homeTitle()} className="text-system-white">
+          <Text style={Fonts.homeTitle()} className="text-white">
             {planetName}
           </Text>
           <TouchableOpacity>
             <Assets.icons.Save width={24} height={24} />
           </TouchableOpacity>
         </View>
-        <Text className="text-white opacity-60 h-100">{planetInfo}</Text>
+        <Text className="text-system-bright opacity-60 h-100">{planetInfo}</Text>
         <TouchableOpacity className="flex-row mt-2 items-center">
-          <Text>Continue reading...</Text>
+          <Text className="text-bright">Continue reading...</Text>
           <Assets.icons.OrangeForward
             width={16}
             height={16}
@@ -39,10 +39,5 @@ const DetailPlanetCard: React.FC<DetailPlanetCardProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-
-
-});
 
 export default DetailPlanetCard;
