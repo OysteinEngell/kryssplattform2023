@@ -1,87 +1,64 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Assets from "../../Assets";
-import { Colors, Fonts } from "../../Styles/StyleGuide";
-import { SvgProps } from "react-native-svg";
+import { Planet, retrieveFavoritesFromStorage } from "../../data";
+import useOwnNavigation from "../../hooks/useOwnNavigation";
+import { usePlanetContext } from "../../providers/PlanetContextProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type DetailPlanetCardProps = {
-  planetName: string;
-  PlanetImage: React.FC<SvgProps>;
-  planetInfo: string;
-};
+interface IDetailPlanetCardProps {
+  planet: Planet;
+}
+const DetailPlanetCard: React.FC<IDetailPlanetCardProps> = ({ planet }) => {
+  const { name, description, Image } = planet;
+  const {
+    updateCurrentPlanet,
+    addToFavorites,
+    removeFromFavorites,
+    favorites,
+  } = usePlanetContext();
+  const { navigate } = useOwnNavigation();
+  const isFavorite = favorites.includes(name);
 
-const DetailPlanetCard: React.FC<DetailPlanetCardProps> = ({
-  planetName,
-  PlanetImage,
-  planetInfo,
-}) => {
+  const handleFavoriteSave = () => {
+    if (isFavorite) {
+      removeFromFavorites(name);
+      return;
+    }
+    addToFavorites(name);
+  };
+
+  const handleContinueReading = () => {
+    updateCurrentPlanet(planet);
+    navigate("DetailPage");
+  };
+
   return (
-    <View style={styles.container}>
-      <PlanetImage width={200} height={200} style={styles.planet} />
-      <View style={styles.infos}>
-        <View style={styles.title}>
-          <Text style={[Fonts.homeTitle(), styles.whiteText]}>
-            {planetName}
-          </Text>
-          <TouchableOpacity>
-            <Assets.icons.Save width={24} height={24} />
+    <View className="w-11/12 bg-brand rounded-lg overflow-hidden my-4 flex-row">
+      <Image width={200} height={200} className="bottom-10 right-10" />
+      <View className="right-8 ml-6 justify-center w-[43%]">
+        <View className="flex-row items-center justify-between">
+          <Text className="text-white text-2xl font-bold mb-2">{name}</Text>
+          <TouchableOpacity onPress={handleFavoriteSave}>
+            {isFavorite ? (
+              <Assets.icons.Saved fill="white" />
+            ) : (
+              <Assets.icons.Save />
+            )}
           </TouchableOpacity>
         </View>
-        <Text style={[styles.whiteText, styles.info]}>{planetInfo}</Text>
-        <TouchableOpacity style={styles.footer}>
-          <Text style={styles.whiteText}>Continue reading...</Text>
-          <Assets.icons.OrangeForward
-            width={16}
-            height={16}
-            style={styles.arrow}
-          />
+        <Text className="text-white opacity-70">{description}</Text>
+        <TouchableOpacity
+          className="flex-row mt-5 items-center"
+          onPress={handleContinueReading}
+        >
+          <Text className="mr-3 text-white">Continue reading...</Text>
+          <Assets.icons.OrangeForward width={14} height={14} />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "95%",
-    backgroundColor: Colors.brandBackground,
-    height: "auto",
-    borderRadius: 10,
-    overflow: "hidden",
-    marginVertical: 10,
-    flexDirection: "row",
-  },
-  planet: {
-    top: -40,
-    left: -35,
-  },
-  infos: {
-    left: -30,
-    width: "41%",
-    marginRight: 100,
-    marginLeft: 6,
-    justifyContent: "center",
-  },
-  info: {
-    opacity: 0.6,
-    height: 100,
-  },
-  title: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  whiteText: {
-    color: "white",
-  },
-
-  arrow: {
-    marginLeft: 5,
-  },
-  footer: {
-    flexDirection: "row",
-    marginTop: 10,
-    alignItems: "center",
-  },
-});
 
 export default DetailPlanetCard;
